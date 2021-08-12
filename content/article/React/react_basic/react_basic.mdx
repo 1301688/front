@@ -234,6 +234,7 @@ topImage: ""
   - 原則 1 ファイル 1 モジュール
   - 必要なときに必要なモジュールのみ読み込む
 - import-export の種類
+
   - 1. default export
     - 名前なし export
     - 推奨される export 方法
@@ -241,11 +242,13 @@ topImage: ""
     - 1 度宣言したアロー関数を default export
     - 名前付き関数宣言と同時に default export
   - 2. default import
+
     - 名前なし import
     - default export したモジュールをそのまま読み込む
     - import モジュール名 from 'ファイルパス' で宣
 
       言
+
   - 3. 名前つき export
     - 1 ファイルから複数モジュールを export したいとき
       - ヘルパー関数を 1 モジュールで複数作った場合、関数（名前）毎に export する
@@ -488,3 +491,19 @@ const ToggleButton = () => {
 
 export default ToggleButton;
 ```
+
+## 8. LifeCycle
+
+- Lifecycle とは
+
+  - コンポーネントが生まれてから破棄されるまでの時間の流れ
+  - ライフサイクルメゾットを使うとその時点に応じた処理を実行できる
+  - ClassComponent 時代は以下のメゾットが頻出
+    - componentDidMount() コンポーネントが配置される(生まれる)期間
+    - componentDIdUpdate() コンポーネントが変更される(成長する)期間
+    - componentWillUnmount() コンポーネントが破棄される(消去)期間
+  - Hooks 時代からは useEffect でライフサイクルを表現
+
+  - レンダリングされたときに何かしらの処理を実行しますよ　というのが useEffect
+
+- Hooks:useeffect の使い方
