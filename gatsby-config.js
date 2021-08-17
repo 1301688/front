@@ -55,7 +55,13 @@ module.exports = {
               maintainCase: true, // Uppercase the letters of the URL fragment to be given
               removeAccents: true, // Remove accent from ID in generated HEADING tag
               isIconAfterHeader: true, // Give icon
-              elements: [`h1`, `h2`], // Which tag to target
+              elements: [`h1`, `h2`, `h3`, `h4`], // Which tag to target
+            },
+          },
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 680,
             },
           },
         ],
@@ -77,5 +83,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-styled-components`,
+    `gatsby-plugin-sharp`,
   ],
 }
