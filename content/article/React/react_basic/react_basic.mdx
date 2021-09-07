@@ -26,145 +26,55 @@ topImage: ""
 
 ## 1.React
 
-- React を使用する目的
-  - 効率の良い再描画[レンダリング]を行うこと
-- Facebook 社が開発した UI ライブラリ
-  - モジュール < パッケージ < ライブラリ　※https://zenn.dev/nekoallergy/articles/0adf4d57acf9b4
-- コンポーネントを組み合わせて Web の画面を作っていく
-- React が登場するまでの Web の画面描画
-  - ブラウザは HTML という文書（ドキュメント）を画面に描画する
-  - 描画する HTML はツリー構造（要素と要素が繋がっている）になっていて変更する際（User がアクションを加えた時）に DOM を使う
-  - DOM とは[Document Object Model]　 HTML にアクセスする窓口
-  - HTML を変更するにはブラウザの DOM を変更する
-  - DOM を直接変更して変更した HTML を再描画するのはコストが高い
-- ブラウザで DOM 操作、変更から仮想 DOM へ
-  - ブラウザの DOM ツリーを JavaScript のオブジェクトとして扱う（記述することでオブジェクトになる？だから JS ファイルだけで動く？）
-  - 作った JavaScript のオブジェクトは JavaScript エンジンを使って操作する
-  - そうすることでブラウザに負荷をかけずにコストが低く効率の良い再描画[レンダリング]を行うことができる
-- 仮想 DOM であれば DOM の状態を JavaScript で管理することができる
-  - その仮想 DOM が React のコンポーネントである
-  - React のコンポーネント見た目だけではなく、「機能、状態をもった UI」である
-- 差分描画のしくみ
-  - 差分描画があることで React は効率的に必要な箇所を書き換えることが出来る
-  - React を使ってしっかり作れば、通常の HTML,CSS,JavaScript で作るよりもシンプル、綺麗、UX が良い App を作ることが出来る
-  - 仮想 DOM で変更があった箇所、差分のみを描画してその影響を受ける
+## DOM 要素と React 要素
 
-## 2.JSX
+- まず普通の DOM と要素
+- DOM とは[Document Object Model]　 HTML 要素 にアクセスする窓口
 
-- JSX を使用する目的
+## React を使用する目的
 
-  - JSX を使うと HTML ライクに書けるから
-  - JSX を使わない場合、React.createElement という式を使って React 要素を生成する
-  - JSX と React.createElement の構文は等価　同じ結果となる
-  - React.createElement を使った構文は直感的ではない
-  - JSX を使うことでがデベロッパーは楽に記述ができる
+- 効率の良い再描画[レンダリング]を行うこと
 
-- JSX とは
+## Facebook 社が開発した UI ライブラリ
 
-  - HTML と JavaScript をかけ合わせて作った拡張言語
-  - あくまで JavaScript を拡張しているものなので HTML っぽい記述で JavaScript を使えることが非常に便利で強力
-  - HTML ライクな記述と JavaScript の構文が使えるので直感的に書ける
-  - JSX は最終的に [React 要素]を生成する
+- モジュール < パッケージ < ライブラリ　※https://zenn.dev/nekoallergy/articles/0adf4d57acf9b4
 
-- JSX がやっていること
+## コンポーネントを組み合わせて Web の画面を作っていく
 
-  - コンパイル時　[コンパイル=ある言語を違う言語に変換すること]
-  - 1. JSX ->　コンパイラ -> React.createElement の式に変換
-  - 2. React 要素を生成
-  - 3. HTML として出力
+## React が登場するまでの Web の画面描画
 
-- JSX の基礎文法
-  - 対象のファイルの拡張子は[.js]でも JSX と取り扱えるが[.jsx]と明示的に伝えたほうが良いらしい
-  - 1. React ライブラリを import する ※React Ver.17 以降は宣言しなくても React が使えるようになった
-  ```
-  import React from 'react';
-  ```
-  - 2. class -> className
-  - 3. キャメルケースで記述する
-  - 4. {}内で変数を扱える {}内は JavaScript の世界
-    - だから return が 2 つあっても動く
-  - 5. 閉じタグが必要
-  - 6. JSX は必ず改装構造であること
-    - 最上位コンポーネントは並列（2 つ以上の要素）にできない
-    - React.Fregment で囲む -> 省略形 = <></>
+- ブラウザは HTML という文書（ドキュメント）を画面に描画する
+- 描画する HTML はツリー構造（要素と要素が繋がっている）になっていて変更する際（User がアクションを加えた時）に DOM を使う
+- DOM とは[Document Object Model]　 HTML にアクセスする窓口
+- HTML を変更するにはブラウザの DOM を変更する
+- DOM を直接変更して変更した HTML を再描画するのはコストが高い
 
-## 3. 環境構築
+## ブラウザで DOM 操作、変更から仮想 DOM へ
 
-- 環境構築する目的
-  - 開発環境がなければ創れないから
-- create-react-app とは
-  - 最も簡単に React の開発環境を構築出来る React 公式のツールチェイン
-  - 本来の React 環境構築は以下が必要
-    - トランスパイラ（JSX→JavaScript）の Babel
-    - バンドラー（複数のモジュールの依存関係を解決してひとつにまとめるもの）の Webpack
-    - 初学時点で上記の設定を自身ですることは非推奨
-  - create-react-app に必要なもの
-    - Homebrew:MacOS のパッケージ管理
-    - nodebrew:node のバージョン管理ツール
-    - Node.js:10.16 以上
-    - npm:5.6 以上
-  - 必要なもののインストール手順
-    1. Homebrew のインストール
-       > Homebrew の site からインストールコマンドをコピー  
-       > ターミナルへペーストしてインストール実行  
-       > コマンド[ brew -v ]を実行、返ってくれば完了
-    2. nodebrew のインストール
-       > コマンド[ brew install nodebrew ]を実行、インストール  
-       > コマンド[ nodebrew -v ]を実行、返ってくれば完了
-    3. node（Node.js）のインストール
-       > コマンド[ nodebrew ls-remote ]を実行、node バージョン一覧確認
-       > 一覧で error になる場合はコマンド[ nodebrew setup ]を実行、[ nodebrew ls-remote ]を実行、node バージョン一覧再確認
-       > node バージョン指定の場合:コマンド[ nodebrew install-binary {version を指定} ]を実行、インストール
-       > node バージョン最新版の場合:コマンド[ nodebrew install-binery latest ]を実行、インストール
-       > node バージョン安定版の場合:コマンド[ nodebrew install-binary stable ]を実行、インストール
-       > コマンド[ nodebrew ls ]を実行、インストールされたバージョン確認ができれば完了
-    4. node の有効化（nodebrew 使用の場合）
-       > コマンド[ nodebrew ls ]を実行、インストールされているバージョンと current:none を確認
-       > コマンド[ nodebrew use { version } ]を実行
-       > コマンド[ nodebrew ls ]を実行、current:{ version } を確認できれば完了
-    5. node の環境パスを通す
-       > コマンド[ echo $SHELL ]を実行、SHELL（ターミナル環境の種類）を確認
-       > SHELL が bash の場合:コマンド[ echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.bash_profile ]を実行
-       > SHELL が zsh の場合:コマンド[echo 'export PATH=$HOME/.nodebrew/current/bin:$PATH' >> ~/.zprofile ]を実行
-       > SHELL を必ず再起動する ※再起動コマンド[ exec $SHELL -l ]
-       > コマンド[ node -v ]を実行、返ってくれば完了
-- create-react-app の実行
-  - コマンド[ cd {project folder} ]を実行、プロジェクトを実行する親フォルダへ移動
-  - コマンド[ npx create-react-app {新規の子フォルダ}]を実行
-    - npx:ネットワーク上にある npm のコマンドを実行するもの
-    - create-react-app がネットワーク上に用意されているので npx を使用する
-  - コマンド[ cd {新規の子フォルダ}]を実行、プロジェクトフォルダができていることを確認
-  - 使用するエディタ||総合開発環境でプロジェクトフォルダを開く、各ファイルがあることを確認
-  - コマンド[ npm start ]を実行、React 初期画面が表示されれば完了
-- 環境のファイル構成
-  - src
-    - 開発用のファイルが格納される
-    - React コンポーネントの jsx ファイルなどはここに置く
-  - public
-    - 静的ファイルが格納される
-    - html ファイルや画像ファイル
-  - build
-    - 本番用ファイルが格納される（デプロイ時）
-- スクリプトの解説
+- ブラウザの DOM ツリーを JavaScript のオブジェクトとして扱う（記述することでオブジェクトになる？だから JS ファイルだけで動く？）
+- 作った JavaScript のオブジェクトは JavaScript エンジンを使って操作する
+- そうすることでブラウザに負荷をかけずにコストが低く効率の良い再描画[レンダリング]を行うことができる
 
-  - npm start
-    - ローカルサーバーを起動して React アプリを確認出来る
-    - ホットリロードに対応（ファイル保存で自動更新）
-  - npm run build
-    - 本番用ファイルを生成して build ディレクトリに出力
-    - src と public のファイルを 1 つにまとめる（バンドル）
-  - npm run eject
-    - Babel（コンパイラ）や Webpack（バンドル）の設定を変えたい時に使う
+## 仮想 DOM であれば DOM の状態を JavaScript で管理することができる
 
-- コンポーネント
+- その仮想 DOM が React のコンポーネントである
+- React のコンポーネント見た目だけではなく、「機能、状態をもった UI」である
 
-  - 通常の class や関数
-  - 見た目と機能を持つ UI
-  - コンポーネントを組みわせてページを描画する
-  - 2 種類のコンポーネント
-    - Class Component
-    - Functional Component
-  - React Hooks の登場で 2 種類のコンポーネントで使える機能に差がなくなった
+## 差分描画のしくみ
+
+- 差分描画があることで React は効率的に必要な箇所を書き換えることが出来る
+- React を使ってしっかり作れば、通常の HTML,CSS,JavaScript で作るよりもシンプル、綺麗、UX が良い App を作ることが出来る
+- 仮想 DOM で変更があった箇所、差分のみを描画してその影響を受ける
+
+## コンポーネント
+
+- 通常の class や関数
+- 見た目と機能を持つ UI
+- コンポーネントを組みわせてページを描画する
+- 2 種類のコンポーネント
+  - Class Component
+  - Functional Component
+- React Hooks の登場で 2 種類のコンポーネントで使える機能に差がなくなった
 
 - コンポーネントを使う目的
 
