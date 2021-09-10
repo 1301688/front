@@ -98,23 +98,23 @@ topImage: ""
 - ユースケース
   - 簡単なカウントダウンを実装する
   - 同期バージョン
-  ```
+  ```js
   const countdown = (value, fn) => {
-  fn(value);
-  return value > 0 ? countdownn(value - 1, fn) : value;
-  };
-  countdown(10, (value) => console.log(value));
+    fn(value)
+    return value > 0 ? countdownn(value - 1, fn) : value
+  }
+  countdown(10, value => console.log(value))
   ```
   - 非同期バージョン(delay で非同期実装)
-  ```
+  ```js
   const countdown = (value, fn, delay = 1000) => {
-  fn(value);
-  return value > 0
-    ? setTimeout(() => countdown(value - 1, fn, delay), delay)
-    : value;
-  };
-  const log = (value) => console.log(value);
-  countdown(10, log);
+    fn(value)
+    return value > 0
+      ? setTimeout(() => countdown(value - 1, fn, delay), delay)
+      : value
+  }
+  const log = value => console.log(value)
+  countdown(10, log)
   ```
 - まとめ
   - 参考サイト →https://qiita.com/jumpyoshim/items/20e6b5e70efa466699b4
