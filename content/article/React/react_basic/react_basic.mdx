@@ -24,17 +24,139 @@ topImage: ""
 
 ![local-version](./local.jpg)
 
-## 1.React
+##  最初にブラウザの歴史
 
-## DOM 要素と React 要素
+- 初期の Web サイトは独立した HTML ページで構成されていた
+  - そのため、ユーザーがページ遷移するたびにブラウザは異なる HTML をロードしていた
+- その後、AJAX(Asynchronous JavaScript and XML)の登場で SPA(Single Page Application)が主流になる
+  - 画面遷移の際にドキュメント全体をロードするのではなくドキュメントの一部のみをロードしてページを部分的に更新する App
+- そのようなページ更新を JavaScript で行うため、ブラウザは DOM API を提供する
+  - React はその DOM API の呼び出しを一手に引き受けてくれるライブラリ
+- SPA を実装するには DOM の操作が不可欠
+  - それらを React が代行してくれるので、開発者は直接 DOM API を呼び出す必要がない
+- そのかわりに React に対して「何をしたいのか」が記述された指示書のようなものを渡す
+  - その指示書を React 要素と呼ぶ
+  - React は渡された指示書に従って UI を構築・描画する
+
+## React を使用する
+
+## 現時点での簡単まとめ
+
+- JS で書いた時と React で書いた時（createElement)の結果は同じ
+- DOM 　 API を直接呼び出すか React でフィルター通すかの違い
+- SPA は JS だけでも実装できる　 React ライブラリを使用すると書きやすい
+- SPA は React できちんと書くと仮装 DOM の恩恵でパフォーマンスがよくなる
+
+## DOM と ReactDOM > DOM 要素 と React 要素
+
+- 参考サイト →http://www2.nagano.ac.jp/hiraoka/IIS/10_3.html
+
+```
+browser > html,css,js > paas > DOM > DOMelement > render > UI
+<br/>
+browser > Reactelement > paas > ReactDOM > DOMelement > render > UI
+```
 
 - React を動作させるために使用するライブラリ
-  -- React => ビューを構築するためのライブラリ
-  -- ReactDOM => React で構築されたビューをブラウザで構築するためのライブラリ
-  -- ビュー => ソフトウェア開発におけるビューとは利用者への表示や操作の受け付け（ユーザーインターフェース）を担当する部分のことをビューという
-  　　- MVC（Model-View-Controller）というよく知られる設計モデルがある
-- まず普通の DOM と要素
-  -- DOM とは[Document Object Model]　 HTML 要素 にアクセスする窓口
+
+  - React => ビューを構築するためのライブラリ
+  - ReactDOM => React で構築されたビューをブラウザで構築するためのライブラリ
+  - ビュー => ソフトウェア開発におけるビューとは利用者への表示や操作の受け付け（ユーザーインターフェース）を担当する部分のことをビューという
+    - MVC（Model-View-Controller）というよく知られる設計モデルがある
+
+- まず通常の DOM と要素
+
+  - DOM とは
+
+    - [Document Object Model]　 HTML 要素 にアクセスする窓口
+    - HTML をパースしてそれをもとにデータ構造を構築する Web API
+
+  - DOM 要素とは
+    - ノードのこと
+    - DOM を構成する主要なデータ　 JavaScript のオブジェクト
+    - ブラウザ内の JavaScript はルートオブジェクトの window オブジェクトを出発点としてあらゆるオブジェクトにアクセスできる
+
+- 次に ReactDOM と React 要素
+
+  - ReactDOM とは
+    - React 要素をブラウザに描画するためのライブラリ
+    - React 要素を DOM 要素へ変換する
+  - React 要素とは
+    - React 要素の実体は、どのように DOM 要素を構築するかが記述された JavaScript オブジェクト
+    - React 要素を作成するには単純に React.createElement を使うか JSX を使う
+
+- React 要素の内部構造
+
+```js
+React.createElement('h1',{id:'recipe-0'},'Backed Salmon')
+// ▲と▼は同じ
+<h1 id='recipe-0'>Backed Salmon</h1>
+
+// ▲をコンソールに出力した結果▼
+   {
+     $$typeof: Symbol(React.element),
+     'type': 'h1',
+     'key': null,
+     'ref': null,
+     'props':{id:'recipe-0',children:'Backed Salmon'}
+     '_owner' null,
+     '_store' {}
+   }
+```
+
+- React 要素の子要素
+  - createElement の３番目以降の引数はすべて子要素で、任意の数の子要素を引数として渡すことができる
+  - React はこれらの子要素の配列を props.children に格納する
+
+```js
+ {
+     'type': 'ul',
+     'props': {
+       'children': [
+          {'type':'li','props': {'children':'1'} ... }
+          {'type':'li','props': {'children':'2'} ... }
+          {'type':'li','props': {'children':'3'} ... }
+          {'type':'li','props': {'children':'4'} ... }
+          {'type':'li','props': {'children':'5'} ... }
+          {'type':'li','props': {'children':'6'} ... }
+       ]
+       ...
+     }
+  }
+```
+
+- 配列から子要素を生成する
+  - 上記のコンソール結果をスケールする方法で書き直す
+  - React の利点の  ひとつとして、UI からデータを分離できることが挙げられる
+  - つまり React は JavaScript なので複雑な要素を記述する場合は JavaScript で  ロジックを書けば  良い
+
+```js
+const list = [
+  1,2,3,4,5,6
+];
+
+React.createElement(
+  ul,
+  {className: numbers},
+  list.map(number) => React.createElement('list',null,number)
+)
+```
+
+- key プロパティ
+  - 上記のコードのように「要素の配列」を「別の要素の  子要素」に設定する場合、配列の  各要素は key プロパティを持つ必要がある
+  - React は要素の更新を管理するのに key プロパティを使用する
+  - key プロパティにユニーク  な値を設定することで警告を回避できる
+- ▼ 上記のコードを警告が出ないように書き換えてみる
+
+```js
+React.createElement(
+  ul,
+  {className: numbers},
+  list.map(number, i) => React.createElement('list',{ key:i },number)
+
+```
+
+---
 
 ## React を使用する目的
 
@@ -63,7 +185,7 @@ topImage: ""
 ## 仮想 DOM であれば DOM の状態を JavaScript で管理することができる
 
 - その仮想 DOM が React のコンポーネントである
-- React のコンポーネント見た目だけではなく、「機能、状態をもった UI」である
+- React のコンポーネントは見た目だけではなく、「機能、状態をもった UI」である
 
 ## 差分描画のしくみ
 
@@ -71,15 +193,33 @@ topImage: ""
 - React を使ってしっかり作れば、通常の HTML,CSS,JavaScript で作るよりもシンプル、綺麗、UX が良い App を作ることが出来る
 - 仮想 DOM で変更があった箇所、差分のみを描画してその影響を受ける
 
+---
+
 ## コンポーネント
 
-- 通常の class や関数
-- 見た目と機能を持つ UI
-- コンポーネントを組みわせてページを描画する
+- コンポーネントとは
+
+  - 通常の class や関数
+  - 見た目と機能を持つ UI
+  - コンポーネントを組みわせてページを描画する
+    <br />
+
+- コンポーネント設計
+
+  - コンポーネントがスケールするかどうか必ず考慮する
+    - そのコンポーネントはひとつのデータを  問題なく表示できるかもしれないが、10,000 件表示する場合はどうか？
+    -  コンポーネント内（関数内） にハードコードしていないか？
+    - グローバル変数を参照していないか？props オブジェクト経由で参照すべき（props オブジェクトを  関数の  引数  として渡す）
+  - 要するにコンポーネントそれぞれの役割を  具体化して、スケール ・拡張できるよう src は抽象化する
+
+  <br />
+
 - 2 種類のコンポーネント
+
   - Class Component
   - Functional Component
-- React Hooks の登場で 2 種類のコンポーネントで使える機能に差がなくなった
+  - React Hooks の登場で 2 種類のコンポーネントで使える機能に差がなくなった
+    <br />
 
 - コンポーネントを使う目的
 
@@ -88,19 +228,20 @@ topImage: ""
     - 1 コンポーネント 1 ファイル
     - ファイルを分けることでコードが読みやすくなる
   - 変更に強くするため
-    - 修正が局所的
+  - 修正が局所的
+    <br />
 
 - コンポーネントの基本的な使い方
-- 1 ファイル 1 コンポーネントにする目的
-  - コンポーネントの責務を明確にする
-  - 管理しやすくなるため
-  - 再利用するため
-- 親コンポーネント
-  - 親コンポーネントで子コンポーネントを import
-- 子コンポーネント
 
-  - 子コンポーネントで自分自身を export (親コンポーネントに import されるため)
-  - 子コンポーネントは親コンポーネントに import されて使用される
+  - 1 ファイル 1 コンポーネントにする目的
+    - コンポーネントの責務を明確にする
+    - 管理しやすくなるため
+    - 再利用するため
+  - 親コンポーネント
+    - 親コンポーネントで子コンポーネントを import
+  - 子コンポーネント
+    - 子コンポーネントで自分自身を export (親コンポーネントに import されるため)
+    - 子コンポーネントは親コンポーネントに import されて使用される
 
 - props でデータを受け渡す
 
@@ -203,9 +344,9 @@ topImage: ""
 - state を使用する理由
   - state とは状態　現在のコンポーネントの状態（値）
   - React コンポーネントの値を書き換えるため state を使用する
-    - React コンポーネントの要素を DOM で直接書き換えること(document.getElementById)は出来るが、  
+    - React コンポーネントの要素を DOM で直接書き換えること(document.getElementById)は出来るが、
       仮想 DOM を使用するメリットが失われてパフォーマンスが落ちるので Bad
-    - そこで使用するのが state であり、コンポーネントがもともと持っている値（state）を  
+    - そこで使用するのが state であり、コンポーネントがもともと持っている値（state）を
       新しい値（state）を使って再描画（レンダリング）させるのが Good
 - React コンポーネントが再描画されるきっかけ
 
@@ -221,26 +362,31 @@ topImage: ""
 
   ```JavaScript:title=useState宣言　※これは構文、決まり（分割代入のイメージ）
   const [state(現在の状態),setState(更新関数命名)] = useState(initialState(初期値設定))
-
   ```
 
-  - 「useState（関数）を使うと現在の状態（state）とそれを更新するための関数（setState）が返ってきますよ」と覚える
-  - そして「その更新するための関数、更新関数（setState）に新しい値（newState）を渡すと state の更新ができますよ」と覚える
+````
 
-  2. state の更新
+```
 
-  ```JavaScript:title=stateの更新構文
-  setState（更新関数）(newState（新しい値）)
+```
 
-  ```
+- 「useState（関数）を使うと現在の状態（state）とそれを更新するための関数（setState）が返ってきますよ」と覚える
+- そして「その更新するための関数、更新関数（setState）に新しい値（newState）を渡すと state の更新ができますよ」と覚える
 
-  3. 具体例
+2. state の更新
 
-  ```JavaScript:title=1.メッセージの状態｜2.いいねの状態｜3.サイト反映の状態
-  1. const [message,setMessage] = useState('130 is cool');
-  2. const [likes,setLikes] = useState(0);
-  3. const [isPublished,setIsPublished] = useState(false);
-  ```
+```JavaScript:title=stateの更新構文
+setState（更新関数）(newState（新しい値）)
+
+```
+
+3. 具体例
+
+```JavaScript:title=1.メッセージの状態｜2.いいねの状態｜3.サイト反映の状態
+1. const [message,setMessage] = useState('130 is cool');
+2. const [likes,setLikes] = useState(0);
+3. const [isPublished,setIsPublished] = useState(false);
+```
 
 - props と state の違い
 
@@ -430,3 +576,8 @@ export default ToggleButton;
 - とう行くことでハンズオンに切り替え
 - とにかく 8/16 からハンズオンばかり実行しつつ、基本をメモ
 - 移動中はハンズオン教材探し　かつ　昼休み本屋さんでハンズオン探し
+
+```
+
+```
+````

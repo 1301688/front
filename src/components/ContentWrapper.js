@@ -13,7 +13,7 @@ const IndexContent = styled.div`
     padding: 0 ${props => props.theme.sideSpace.small};
   }
 `
-
+//import postContentStyle from "../styles/postContent"
 const PostContent = styled.div`
   ${postContentStyle}
 `
