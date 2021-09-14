@@ -95,6 +95,37 @@ variableName("function_arrow")
   - this が静的に決定できる（詳細は関数とスコープ）this の問題の多くを解決できる
   - new できない（コンストラクタ関数ではない）
 
+# 4.メゾット
+
+- オブジェクトのプロパティである関数をメゾットという
+- JavaScript において関数とメゾットの機能的な違いはない
+- クラスのメゾットと共通の書き方となっている
+
+````js
+// 通常の記法
+const object = {
+  method_1: function () {
+    console.log("functionキーワードでの記法");
+  },
+  method2: () => {
+    console.log("ArrowFunctionでの記法");
+  },
+};
+// 代入の記法
+const object = {};
+object.method = function () {
+  console.log("空オブジェクトを定義してから代入");
+};
+
+// 短縮の記法
+const object = {
+  method()　=> {
+    return "短縮記法でのメゾット";
+  },
+};
+console.log(object.method()); // => "短縮記法でのメゾット"
+```
+
 # コールバック関数
 
 - コールバック関数とは高階関数に引数として渡された関数のこと
@@ -106,8 +137,15 @@ variableName("function_arrow")
   - forEach()
   - addeventListener()
   - setTimeout()
-- ユースケース
-- まとめ
+
+```js
+const array = [1, 2, 3, 4, 5]
+const callback_function = value => {
+  console.log(value)
+}
+// 引数にコールバック関数
+array.forEach(callback_function)
+````
 
 # 高階関数
 
@@ -122,7 +160,7 @@ variableName("function_arrow")
   - sort()
   - reduce()
 - 関連のある関数
-  - 今んとこなし
+  - コールバック関数
 - 構文
   - function 高階関数（コールバック関数）{
     //　処理
@@ -163,13 +201,13 @@ variableName("function_arrow")
   - 簡単なカウントダウンを実装する
   - 同期バージョン
 
-  ```js
-  const countdown = (value, fn) => {
-    fn(value)
-    return value > 0 ? countdownn(value - 1, fn) : value
-  }
-  countdown(10, value => console.log(value))
-  ```
+```js
+const countdown = (value, fn) => {
+  fn(value)
+  return value > 0 ? countdownn(value - 1, fn) : value
+}
+countdown(10, value => console.log(value))
+```
 
 - 非同期バージョン(delay で非同期実装)
 
@@ -245,6 +283,10 @@ countdown(10, log)
 3. 施行と改善 施行を続けたところで無意味　施行ありきの改善を続けることで有意味 (自己改善:アップデート)
 
 ---
+
+```
+
+```
 
 ```
 
