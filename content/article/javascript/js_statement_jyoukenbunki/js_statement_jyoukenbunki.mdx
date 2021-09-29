@@ -1,5 +1,5 @@
 ---
-title: "JavaScriptの文を詳しく理解する"
+title: "JavaScriptの条件分岐"
 date: "2021-09-19T15:20:10Z"
 updateDate: ""
 category: "javascript"
@@ -12,11 +12,11 @@ topImage: ""
 # はじめに、なぜそうなったのか？から学べばキャッチアップしやすい
 
 - JavaScript は文（statement)と式(expression)から構成されている
-  - 文を詳しく理解すれば JavaScript の基本も理解できる
+  - 文を正しく理解すれば JavaScript の基本も理解できる
 
 # 基礎基本を抑える
 
-## 条件分岐
+## JavaScript の条件分岐[文]
 
 - if 文
   - 条件式の評価結果が'true'であるならば'実行する文'が実行される
@@ -92,11 +92,30 @@ if (year % 4 === 0) {
 }
 ```
 
-# 自分が理解できたドキュメントが必ず存在するから
+- switch 文
 
-# その使用したドキュメントを、以下項目に沿って、
+  - switch 文は、if 文と同様に式の評価結果に基づく条件分岐を扱う
+  - break 文は、switch 文から抜けて switch 文の次の文から実行するためのもの
+  - default 文は、どの case にも該当しない場合の処理を実行するためのもの
 
-# かつ自分が理解したまま自分の言葉で言語化してまとめきる
+```js
+const version = "ES6"
+switch (version) {
+  case "ES5":
+    console.log("ECMAScript 5")
+    break
+  case "ES6":
+    console.log("ECMAScript 2015")
+    break
+  case "ES7":
+    console.log("ECMAScript 2016")
+    break
+  default:
+    console.log("しらないバージョンです")
+    break
+} // > "ECMAScript 2015"と出力される
+// break;の後、switchから抜けて実行される次の文
+```
 
 # 今回の目的　達成したい箇所 ユースケース
 
@@ -108,9 +127,16 @@ if (year % 4 === 0) {
 
 # 目的達成手順　順序立てた目的達成手順
 
-# 上記の原理　なぜそうなるのか
-
 # まとめ　ポジティブ意見
+
+- if 文、else if 文、else 文で条件分岐した処理を扱える
+- 条件式に指定した値は真偽値へと変換してから判定される
+- 真偽値に変換すると false となる値を falsy と呼ぶ
+- switch 文と case 節、default 節を組み合わせて条件分岐した処理を扱える
+- case 節で break 文しない場合は引き続き case 節が実行される
+- 条件分岐には if 文や switch 文を利用する
+  - 複雑な条件を定義する場合には、if 文のネストが深くなりやすい
+  - そのような場合には、条件式自体を見直してよりシンプルな条件にできないかを考えてみることも重要
 
 # 自分がわからないと意味がないので自分の言葉でアウトプットすること
 
