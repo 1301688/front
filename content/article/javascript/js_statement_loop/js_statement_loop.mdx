@@ -113,6 +113,129 @@ do {
 
 ---
 
+## for 文
+
+- for 文は繰り返す範囲を指定した反復処理を書くことができる
+
+```js
+for (初期化式; 条件式; 増分式) {
+  実行する文
+}
+```
+
+- for 文の実行フロー
+
+1. 初期化式 で変数の宣言
+2. 条件式 の評価結果が true なら次のステップへ、false なら終了
+3. 実行する文 を実行
+4. 増分式 で変数を更新
+5. ステップ 2 へ戻る
+
+- for 文のサンプルコード
+
+```js
+for (let i = 10; i > 0; i--) {
+  console.log(i)
+  if (i === 1) {
+    console.log("dokkaaaaaaaan!!")
+  }
+}
+```
+
+## break 文
+
+- break 文は処理中の文から抜けて次の文へ移行する制御文
+- while、do-while、for の中で使い、処理中のループを抜けて次の文へ制御を移すことができる
+
+```js
+while (true) {
+  // 実行する文
+  break // *1 へ
+}
+// *1 次の文
+```
+
+- break 文の実行フロー
+
+1. while、do-while、for のいずれかを実行
+2. 条件式の評価結果が true なら break
+3. break を囲っている反復処理を終了させ次の処理へ
+
+- break 文のサンプルコード
+
+```js
+// 引数の`id`が存在すればtrueを返す
+function isEven(id) {
+  return id === "user_name"
+}
+// 引数の`idname`に"user_name"が含まれているならtrueを返しbreakする
+function isEvenIncluded(idname) {
+  let isEvenIncluded = false
+  for (let i = 0; i < idname.length; i++) {
+    const id = idname[i]
+    if (isEven(id)) {
+      isEvenIncluded = true
+      break
+    }
+  }
+  // breakした後に実行する文
+  return isEvenIncluded
+}
+const ids_array = ["user_name3", "user_name2", "user_name1", "user_name"]
+console.log(isEvenIncluded(ids_array)) // => true
+```
+
+## return 文（反復処理を終了させるケース）
+
+- return 文は現在の関数を終了させることができる
+- break と同様に思われるが、異なる
+- break は break を囲っている while 文や for 文の繰り返しが終了し、次の処理を実行するのに対し
+- return は関数ごと終了させる
+
+![break&return_image](./break&return_image.jpg)
+
+- return 文の実行フロー
+
+1. 大抵関数を宣言する
+2. while、do-while、for のいずれかを実行
+3. 条件式の評価結果が true なら return
+4. return が含まれる関数全体を終了させて次のブロックへ
+
+- return 文のサンプルコード
+
+```js
+// 引数の`id`が存在すればtrueを返す
+function isEven(id) {
+  return id === "user_name"
+}
+// 引数の`idname`に"user_name"が含まれているならtrueを返しreturnする
+function isEvenIncluded(idname) {
+  for (let i = 0; i < idname.length; i++) {
+    const id = idname[i]
+    if (isEven(id)) {
+      return true
+    }
+  }
+  return false
+}
+const ids_array = ["user_name3", "user_name2", "user_name1", "user_name"]
+console.log(isEvenIncluded(ids_array)) // => true
+// "user_name"を見つけたらすぐにreturnすることで一時的な変数が不要となり、より簡潔に書ける
+```
+
+## continue 文
+
+- continue 文は現在の反復処理を終了して、次の反復処理を行う
+- while、do-while、for の中で使うことができる
+
+```js
+while (条件式) {
+  // 実行される処理
+  continue // `条件式` へ
+  // これ以降の行は実行されません
+}
+```
+
 # 自分が理解できたドキュメントが必ず存在するから
 
 # その使用したドキュメントを、以下項目に沿って、
